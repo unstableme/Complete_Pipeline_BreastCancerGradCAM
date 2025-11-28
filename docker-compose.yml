@@ -1,0 +1,25 @@
+services:
+  backend:
+    image: unstableme02/idc-backend:latest
+    container_name: idc-backend
+    ports:
+      - "8000:8000"
+    restart: unless-stopped
+    networks:
+      - idc-network
+
+  frontend:
+    image: unstableme02/idc-frontend:latest
+    container_name: idc-frontend
+    ports:
+      - "8501:8501"
+    depends_on:
+      - backend
+    networks:
+      - idc-network
+    environment:
+      - BACKEND_URL=http://idc-backend:8000
+
+networks:
+  idc-network:
+    driver: bridge

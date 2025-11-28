@@ -1,0 +1,11 @@
+<!-- This is root level docker ignore... As there are two separate containers for F & B end so separate docker ignore for them and this is root level
+docker ignore(not complusory but good for speed.)
+ -->
+
+
+myvenv/
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+*.swp
