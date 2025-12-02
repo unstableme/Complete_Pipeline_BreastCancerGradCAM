@@ -12,6 +12,9 @@ Upload an image or choose a sample. (You can search for 'breast cancer histopath
 The backend will classify the tissue and generate a Grad-CAM heatmap.
 """)
 
+st.markdown("NOTE: BECAUSE OF FREE VERSION AND LARGE DOCKER IMAGES, THERE IS A HIGH CHANCE THAT SERVER WON'T GIVE RESULT FOR A FIRST FEW TRY, KEEP TRYING (AS LONG AS YOU SEE BACKEND CONNECTED ON SIDEBAR)")
+
+
 API_URL = os.getenv("BACKEND_URL", "http://127.0.0.1:8000") + "/predict/"   #uses latter url if not former
 
 # Check backend connection
