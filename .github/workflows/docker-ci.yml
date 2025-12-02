@@ -36,13 +36,13 @@ jobs:
         run: |
           docker build \
             -t unstableme02/idc-frontend:${{ steps.vars.outputs.TAG }} \
-            -f Frontend/Dockerfile Frontend/
+            -f Frontend/Dockerfile .
 
       - name: Build Backend Image
         run: |
           docker build \
             -t unstableme02/idc-backend:${{ steps.vars.outputs.TAG }} \
-            -f Backend/Dockerfile Backend/
+            -f Backend/Dockerfile .
 
       - name: Push Frontend Image
         run: |
