@@ -37,7 +37,7 @@ jobs:
         with:
           context: .
           file: Frontend/Dockerfile
-          push: false
+          push: true
           tags: unstableme02/idc-frontend:${{ steps.vars.outputs.TAG }}
           cache-from: type=gha        #uses cache from previous builds to speed up like no reinstall requirements if no change at all
           cache-to: type=gha,mode=max #stores updated for future builds
@@ -48,19 +48,10 @@ jobs:
         with:
           context: .
           file: Backend/Dockerfile
-          push: false
+          push: true
           tags: unstableme02/idc-backend:${{ steps.vars.outputs.TAG }}
           cache-from: type=gha
           cache-to: type=gha,mode=max 
-
-
-      - name: Push Frontend Image
-        run: |
-          docker push unstableme02/idc-frontend:${{ steps.vars.outputs.TAG }}
-
-      - name: Push Backend Image
-        run: |
-          docker push unstableme02/idc-backend:${{ steps.vars.outputs.TAG }}
 
       - name: Trigger Frontend Deploy on Render
         if: ${{steps.vars.outputs.TAG == 'latest'}}
