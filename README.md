@@ -2,6 +2,8 @@ This is a full-stack project with a **FastAPI backend** and a **Streamlit fronte
 
 In this project, I have used custom-27 layers **Convolutional Neural Networks (CNN)** to train the model on breast cancer histopathology images especially for **Invasive Ductal Carcinoma (IDC)** subtype. Along with that, I have used **Grad-CAM interpretability** to show how the model made such predictions. To see the demo, you can visit here: https://idc-frontend-latest.onrender.com/
 
+I have documented this work and published on Zenodo. You can access here: https://zenodo.org/records/16900047
+
 ## ✨ Features
 
 * **Containerized Applications:** Backend and frontend run in separate Docker containers.
