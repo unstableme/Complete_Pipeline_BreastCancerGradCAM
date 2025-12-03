@@ -1,57 +1,11 @@
-This is a full-stack project with a FastAPI backend and a Streamlit frontend, fully containerized using Docker. The project includes CI/CD automation to build, push Docker images, and deploy them automatically on [Render](https://render.com).
+# UnstableMe
 
-## Features
+This is a full-stack project with a FastAPI backend and a Streamlit frontend, fully containerized using Docker. The project includes CI/CD automation to build, push Docker images, and deploy them automatically on Render (https://render.com). The backend and frontend run in separate Docker containers. GitHub Actions is used to build, push Docker images, and deploy to Render automatically. Docker layer caching is applied to speed up builds, and a safe-dev branch can be used for testing before merging to main.
 
-- **Containerized Applications:** Backend and frontend run in separate Docker containers.
-- **CI/CD Automation:** GitHub Actions builds, pushes Docker images, and deploys to Render automatically.
-- **Docker Hub Integration:** Images are published under `unstableme02` account.
-- **Caching for Faster Builds:** Docker layer caching is used to speed up image building.
-- **Multi-Branch Support:** Safe-dev branch can be used for testing before merging to main.
+## Local Setup
 
----
+To run the project locally using Docker and docker-compose, clone or download the docker-compose.yml file from this repository. Then pull the Docker images using `docker pull unstableme02/idc-frontend:latest` and `docker pull unstableme02/idc-backend:latest`. After that, start the services using `docker-compose up -d`. Ensure the docker-compose.yml file is in your current directory when running this command. Once running, you can access the frontend at http://localhost:8501 and the backend at http://localhost:8000.
 
-## Getting Started (Local Setup)
+## CI/CD Workflow
 
-You can run the project locally using Docker and `docker-compose`:
-
-1. **Clone or Download `docker-compose.yml`** from this repository.
-
-2. **Pull Docker Images:**
-
-```bash
-docker pull unstableme02/idc-frontend:latest
-docker pull unstableme02/idc-backend:latest
-
-Start services:
- docker compose up -d
-Make sure to have yml file location and the current directory same in order to run this command.
-
-Access the Application:
-
-Frontend: http://localhost:8501
-Backend: http://localhost:8000
-
-
-CI/CD Workflow Overview
-
-Trigger: On push to main or safe-dev branches.
-
-CI Steps:
-
-Checkout repository
-
-Build Docker images for frontend and backend
-
-Apply caching for faster rebuilds
-
-CD Steps:
-
-Push Docker images to Docker Hub
-
-Trigger deploy hooks on Render (only for main branch)
-
-Docker Hub
-
-Frontend: unstableme02/idc-frontend:latest
-
-Backend: unstableme02/idc-backend:latest
+The CI/CD workflow triggers on push to the main or safe-dev branches. It performs continuous integration (CI) by checking out the repository, building Docker images for frontend and backend, and applying caching for faster rebuilds. Continuous deployment (CD) is performed by pushing Docker images to Docker Hub and triggering deploy hooks on Render, which occurs only for the main branch. Docker images are published under the unstableme02 account. Frontend image: unstableme02/idc-frontend:latest. Backend image: unstableme02/idc-backend:latest.
