@@ -33,16 +33,26 @@ jobs:
           fi
 
       - name: Build Frontend Image
-        run: |
-          docker build \
-            -t unstableme02/idc-frontend:${{ steps.vars.outputs.TAG }} \
-            -f Frontend/Dockerfile .
+        uses: docker/build-push-action@v6
+        with:
+          context: .
+          file: Frontend/Dockerfile
+          push: false
+          tags: unstableme02/idc-frontend:${{ steps.vars.outputs.TAG }}
+          cache-from: type=gha        #uses cache from previous builds to speed up like no reinstall requirements if no change at all
+          cache-to: type=gha,mode=max #stores updated for future builds
+
 
       - name: Build Backend Image
-        run: |
-          docker build \
-            -t unstableme02/idc-backend:${{ steps.vars.outputs.TAG }} \
-            -f Backend/Dockerfile .
+        uses: docker/build-push-action@v6
+        with:
+          context: .
+          file: Backend/Dockerfile
+          push: false
+          tags: unstableme02/idc-backend:${{ steps.vars.outputs.TAG }}
+          cache-from: type=gha
+          cache-to: type=gha,mode=max 
+
 
       - name: Push Frontend Image
         run: |
@@ -51,5 +61,15 @@ jobs:
       - name: Push Backend Image
         run: |
           docker push unstableme02/idc-backend:${{ steps.vars.outputs.TAG }}
+
+      - name: Trigger Frontend Deploy on Render
+        if: ${{steps.vars.outputs.TAG == 'latest'}}
+        run: |
+          curl -X POST "${{ secrets.RENDER_FRONTEND_DEPLOY_HOOK }}"
+
+      - name: Trigger Backend Deploy on Render
+        if: ${{steps.vars.outputs.TAG == 'latest'}}
+        run: |
+          curl -X POST "${{ secrets.RENDER_BACKEND_DEPLOY_HOOK }}"
 
 
