@@ -1,5 +1,6 @@
 FROM python:3.10-slim
 
+# Install only essential OS dependencies for Streamlit + PIL
 RUN apt-get update && apt-get install -y --no-install-recommends \
         libgl1 \
         libglib2.0-0 \
@@ -7,12 +8,12 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
 
 WORKDIR /app
 
-COPY requirements.txt /app/requirements.txt
+# Install Streamlit + required client packages directly
+RUN pip install --no-cache-dir --upgrade pip && \
+    pip install --no-cache-dir streamlit requests pillow
 
+# Copy all frontend files
 COPY ./Frontend/ /app/
-
-RUN pip install --upgrade pip
-RUN pip install --no-cache-dir -r requirements.txt
 
 EXPOSE 8501
 
